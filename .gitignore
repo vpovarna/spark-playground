@@ -1,0 +1,11 @@
+*.class
+*.log
+
+project/
+.idea/
+.bsp/
+
+.DS_Store
+.settings
+*.iml
+/target/*
