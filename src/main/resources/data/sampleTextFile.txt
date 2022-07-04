@@ -1,0 +1,7 @@
+This
+is
+Scala
+and
+I
+Love
+Spark
