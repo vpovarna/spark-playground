@@ -62,7 +62,7 @@ object ComplexTypes extends App {
   // Structures
   // 1 - with col operators
   moviesDF
-    .select(col("Title"), struct(col("US_Gorss"), col("Worldwide_Gross")).as("Profit")) // creates an array
+    .select(col("Title"), struct(col("US_Gross"), col("Worldwide_Gross")).as("Profit")) // creates an array
     .select(col("Title"), col("Profit").getField("US_Gross").as("US_Profit"))
   //    .show(truncate = false)
 
