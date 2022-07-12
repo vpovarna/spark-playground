@@ -4,6 +4,7 @@
 project/
 .idea/
 .bsp/
+out/
 
 .DS_Store
 .settings
