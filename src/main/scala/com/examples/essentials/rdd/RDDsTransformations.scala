@@ -22,7 +22,7 @@ object RDDsTransformations extends App {
   // Read data from Scala collection
   case class Stock(symbol: String, date: String, price: Double)
 
-  val stocksRDD: RDD[Stock] = sc.textFile("src/main/resources/data/stocks.csv")
+  val stocksRDD: RDD[Stock] = sc.textFile("src/main/resources/data/stocks")
     .map(line => line.split(","))
     // filter the header
     .filter(arr => arr(0).toUpperCase() == arr(0))

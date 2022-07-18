@@ -33,12 +33,12 @@ object RDDs extends App {
     }
 
   // method 1: Using parallelize
-  val stocksRdd: RDD[Stock] = sc.parallelize(readStocks("src/main/resources/data/stocks.csv"))
+  val stocksRdd: RDD[Stock] = sc.parallelize(readStocks("src/main/resources/data/stocks"))
 
   stocksRdd.collect().foreach(println)
 
   // method 2: Using textFile method.
-  val stockRdd2: RDD[Stock] = sc.textFile("src/main/resources/data/stocks.csv")
+  val stockRdd2: RDD[Stock] = sc.textFile("src/main/resources/data/stocks")
     .map(line => line.split(","))
     // filter the header
     .filter(arr => arr(0).toUpperCase() == arr(0))
@@ -48,7 +48,7 @@ object RDDs extends App {
   val stockDF = sparkSession.read
     .option("header", "true")
     .option("inferSchema", "true")
-    .csv("src/main/resources/data/stocks.csv")
+    .csv("src/main/resources/data/stocks")
 
   // Convert as dataset
 

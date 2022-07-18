@@ -83,7 +83,7 @@ object DataSource extends App {
     .option("header", "true") // ignores the first name and Spark will use the column names to validate against your schema.
     .option("sep", ",")
     .option("nullValue", "") // Nulls are transformed to empty string
-    .csv("src/main/resources/data/stocks.csv")
+    .csv("src/main/resources/data/stocks")
 
   // Parquet
   carsDF.write

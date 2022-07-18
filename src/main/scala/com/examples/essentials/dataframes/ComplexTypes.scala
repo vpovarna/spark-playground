@@ -50,7 +50,7 @@ object ComplexTypes extends App {
   val stocksDF = spark.read
     .option("header", "true")
     .option("sep", ",")
-    .csv("src/main/resources/data/stocks.csv")
+    .csv("src/main/resources/data/stocks")
 
   stocksDF.select(
     col("symbol"),
