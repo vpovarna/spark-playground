@@ -1,6 +1,6 @@
 package com.examples.essentials.rdd
 
-import com.examples.utils.using
+import com.examples.essentials.utils.using
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.{DataFrame, Dataset, SparkSession}
 

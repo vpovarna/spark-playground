@@ -43,6 +43,66 @@ Spark executors:
  - report their state and results to the driver
  
 Execution modes:
- - cluster : spark driver is lunched on the worker node.
- - client : spark driver stays on the client and the spark cluster manager will create the executors so the driver will then communicate to them
+ - cluster = spark driver is lunched on the worker node.
+ - client = spark driver stays on the client and the spark cluster manager will create the executors so the driver will then communicate to them
  - local
+
+## Spark Architecture
+
+Low level API: DStream, RDDs, Distributed Variables
+Higher Level Structured API: DataFrames, Datasets, Spark SQL
+Applications: Streaming, ML, GraphX, Other Libraries
+
+**Stream processing** = computation is done when new data comes in. No definitive end of incoming data.
+
+Pros / Cons
+ Pros:
+  - Much lower latency than batch processing
+  - Greater performance / efficiency (especially with incremental data)
+
+ Cons:
+  - Maintaining state and order for incoming data
+  - Exactly once processing in the context of machine failure
+  - Responding to events ar low latency
+  - Updating business logic at runtime
+
+Spark Streaming operates on micro-batches. 
+
+Input Source:
+ - Kafka, Flume
+ - A distributed file system
+ - Sockets
+
+Output Source: almost all available formats
+
+Streaming I/O
+ - append = only add new records
+ - update = modify records in place
+ - complete = rewrite everything
+
+Trigger = when the new data is written.
+
+## DataFrames
+
+DataFrames are distributed collections of rows conforming to a schema = list describing the column names and types.
+The types are known to Spark and not at compile type.
+Rows have the same structure
+
+DataFrames are immutable. Now DFs are created using transformations
+
+Transformations:
+-> narrow: one input partitions will contribute to at most one output partitions
+-> wide: one input partitions will create multiple output partitions.
+
+Shuffle: Data exchange between cluster nodes.
+occurs in wide transformations.
+massive perf impact
+
+Lazy evaluation == sparks wait until the last moment to execute the DF transformations
+Spark will create a graph of transformations before running the graph.
+logical plan = DF dependency graph + narrow/wide transformations sequence
+physical plan = optimized sequence of steps for nodes in the cluster.
+
+Transformations vs Actions
+transformations describes how new DFs are obtained
+actions actually start executing Spark code.
