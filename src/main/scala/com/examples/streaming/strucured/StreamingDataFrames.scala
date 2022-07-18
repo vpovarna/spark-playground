@@ -1,5 +1,6 @@
 package com.examples.streaming.strucured
 
+import com.examples.streaming.util.Schema.stockSchema
 import org.apache.spark.sql.functions.{col, length}
 import org.apache.spark.sql.streaming.Trigger
 import org.apache.spark.sql.types.{DateType, DoubleType, StringType, StructField, StructType}
@@ -37,13 +38,6 @@ object StreamingDataFrames {
   }
 
   def readFromFiles(): Unit = {
-
-    val stockSchema = StructType(Array(
-      StructField("company", StringType),
-      StructField("date", DateType),
-      StructField("value", DoubleType)
-    ))
-
     val stocksDF = spark.readStream
       .format("csv")
       .option("header", "false")

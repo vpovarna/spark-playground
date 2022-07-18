@@ -82,6 +82,9 @@ Streaming I/O
 
 Trigger = when the new data is written.
 
+Aggregation in spark streaming works at the micro batch level, only when the batch is created.
+Append output mode is not supported on aggregation without watermarks
+
 ## DataFrames
 
 DataFrames are distributed collections of rows conforming to a schema = list describing the column names and types.
