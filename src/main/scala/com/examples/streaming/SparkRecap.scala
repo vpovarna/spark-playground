@@ -16,7 +16,7 @@ object SparkRecap {
   val cars: DataFrame = spark.read
     .format("json")
     .option("inferSchema", "true")
-    .load("src/main/resources/data/cars.json")
+    .load("src/main/resources/data/cars")
 
   val guitarPlayersDF: DataFrame = spark.read
     .option("inferSchema", "true")

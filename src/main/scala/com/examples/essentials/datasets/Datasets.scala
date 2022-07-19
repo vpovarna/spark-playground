@@ -41,7 +41,7 @@ object Datasets extends App {
       .json(s"src/main/resources/data/$fileName")
   }
 
-  val carsDF = readDataframe("cars.json")
+  val carsDF = readDataframe("cars")
 
   import spark.implicits._
 

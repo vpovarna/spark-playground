@@ -13,7 +13,7 @@ object SparkSQL extends App {
 
   val carsDF = spark.read
     .option("inferSchema", "true")
-    .json("src/main/resources/data/cars.json")
+    .json("src/main/resources/data/cars")
 
 
   val euCarsDF = carsDF.select(col("Name"))

@@ -34,7 +34,7 @@ object DataSource extends App {
     .format("json")
     .option("inferSchema", "true")
     .option("mode", "failFast") // mode decide what Spark should do when the rows doesn't match the defined schema.
-    .load("src/main/resources/data/cars.json")
+    .load("src/main/resources/data/cars")
 
   // Modes are: failFast, dropMalformed, permissive (default)
 
@@ -45,7 +45,7 @@ object DataSource extends App {
   val carsDFWithOptionMap = spark.read
     .format("json")
     .options(Map("mode" -> "failFast",
-      "path" -> "src/main/resources/data/cars.json",
+      "path" -> "src/main/resources/data/cars",
       "inferSchema" -> "true"
     ))
 
@@ -66,7 +66,7 @@ object DataSource extends App {
     .option("dataFormat", "YYYY-MM-dd") // the dateFormat works only with provided schema
     .option("allowSingleQuotes", "true")
     .option("compression", "uncompressed") // other compresion: bzip2, gzip, lz4, snappy, deflate
-    .json("src/main/resources/data/cars.json")
+    .json("src/main/resources/data/cars")
 
   // If the date format specified is incorrect, so if Spark failed parsing it will put null
 

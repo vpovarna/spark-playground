@@ -41,7 +41,7 @@ object CommonTypes extends App {
   // Strings
   val carsDF = spark.read
     .option("inferSchema", "true")
-    .json("src/main/resources/data/cars.json")
+    .json("src/main/resources/data/cars")
 
   // Capitalize the first letter of every word from the sentence
   carsDF.select(initcap(col("Name"))).show()

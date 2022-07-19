@@ -12,7 +12,7 @@ object DataFramesProjections extends App {
 
   val carsDF = spark.read
     .option("inferSchema", "true")
-    .json("src/main/resources/data/cars.json")
+    .json("src/main/resources/data/cars")
 
   carsDF.show()
 

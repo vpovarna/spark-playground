@@ -16,7 +16,7 @@ object DataFrameBasic extends App {
   val firstDF: DataFrame = spark.read
     .format("json")
     .option("inferSchema", "true")
-    .load("src/main/resources/data/cars.json")
+    .load("src/main/resources/data/cars")
 
   // showing the DF
   firstDF.show()
@@ -58,7 +58,7 @@ object DataFrameBasic extends App {
   val carsDF = spark.read
     .format("json")
     .schema(carsSchema)
-    .load("src/main/resources/data/cars.json")
+    .load("src/main/resources/data/cars")
 
   carsDF.show()
 
