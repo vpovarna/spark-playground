@@ -65,7 +65,7 @@ object DStreamTransformations {
       val p: String = "src/main/resources/data/people"
       val f = new File(p)
       val nFiles = f.listFiles().length
-      val path = s"$path/people$nFiles.json"
+      val path = s"$p/people$nFiles.json"
       ds.write.json(path)
     }
 
