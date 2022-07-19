@@ -85,6 +85,22 @@ Trigger = when the new data is written.
 Aggregation in spark streaming works at the micro batch level, only when the batch is created.
 Append output mode is not supported on aggregation without watermarks
 
+DStream = Discretized Stream
+DStreams are never ending sequence of RDDs. Batches are triggered at the same time because the nodes clock are sync. Each batch is an RDD
+
+Because DStreams are sequence of RDDs it means that they are distributed collections of elements, and we have access to functional operators: map, flatmap, filter. 
+DStreams requires a receiver to perform computation. Usually it's one per DStream. The receiver is managed by spark context on the driver. The receiver needs a CPU core on the machine running the driver.  
+
+### Structure of a DStream application
+
+1. Create a spark session and spark context
+2. Create a spark streaming context (ssc)
+3. Define input sources by creating DStreams
+4. Define transformations on DStreams
+5. Call an action on DStream
+6. Start the computation with ssc.start().No more computations can be added
+7. Await termination, or stop the computation. You cannot restart the computation
+
 ## DataFrames
 
 DataFrames are distributed collections of rows conforming to a schema = list describing the column names and types.
