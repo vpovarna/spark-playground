@@ -1,5 +1,6 @@
 package com.examples.streaming.strucured
 
+import com.examples.streaming.util.Car
 import com.examples.streaming.util.Schema.carsSchema
 import org.apache.spark.sql.{Dataset, Encoders, SparkSession}
 import org.apache.spark.sql.functions._

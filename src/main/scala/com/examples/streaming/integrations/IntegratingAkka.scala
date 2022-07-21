@@ -3,7 +3,7 @@ package com.examples.streaming.integrations
 import akka.actor.{Actor, ActorLogging, ActorRef, ActorSystem, Props}
 import akka.stream.{ActorMaterializer, OverflowStrategy}
 import akka.stream.scaladsl.{Sink, Source}
-import com.examples.streaming.strucured.Car
+import com.examples.streaming.util.Car
 import com.examples.streaming.util.Schema.carsSchema
 import com.typesafe.config.ConfigFactory
 import org.apache.spark.SparkContext

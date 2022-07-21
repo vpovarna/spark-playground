@@ -1,4 +1,4 @@
-package com.examples.streaming.strucured
+package com.examples.streaming.util
 
 case class Car(
                 Name: String,
