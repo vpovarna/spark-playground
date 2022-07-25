@@ -101,6 +101,16 @@ DStreams requires a receiver to perform computation. Usually it's one per DStrea
 6. Start the computation with ssc.start().No more computations can be added
 7. Await termination, or stop the computation. You cannot restart the computation
 
+### Event Time Windows
+Event time = the moment when the record was generated. Set by the data generation system. Usually a column in the dataset.
+The event time is different from the processing time. 
+
+Processing Time = the time the record arrives in Spark.
+
+Window Functions = aggregation on time-based groups
+
+Watermark = how far spark will still consider records before dropping them
+
 ## DataFrames
 
 DataFrames are distributed collections of rows conforming to a schema = list describing the column names and types.
