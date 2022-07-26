@@ -30,7 +30,7 @@ object EventTimeWindows {
     .select(from_json(col("value"), onlinePurchaseSchema).as("purchase"))
     .selectExpr("purchase.*")
 
-  def readPurchasesFromFile() = spark.readStream
+  def readPurchasesFromFile(): DataFrame = spark.readStream
     .schema(onlinePurchaseSchema)
     .json("src/main/resources/data/purchases")
 
