@@ -169,7 +169,7 @@ Other command line args:
 
 Most of the time, application will be submited in cluster mode. 
 
-#### Optimizing DataFame Transformations
+### Optimizing DataFame Transformations
 
 If DFs or RDDs don't have a known partitioner, a shuffle is needed
 Shuffled Join (very expensive)
@@ -216,3 +216,54 @@ Broadcast Join:
     - if smaller DF is quite big -> OOMing executors
   
   Broadcast can be done automatically by spark. Finds the DF smaller than threshold.
+  
+
+#### Column Pruning 
+Cut off columns that are not necessary. Shrinks DF size.
+Useful for joins and groups.
+
+This is the main goal, to drop the column as quick as posible.
+
+#### Pre-Partitioning
+You need to partition your data early so that spark doesn't have to do it for you.
+Whenever you do a repartition by a column, you'll do a hash partition scheme: HashPartitioner
+   - the rows with the same value from the id column will be in the same partition.
+   - we are doing a join on co-partitioned datasets
+
+Lessons:
+  Partition early
+  Same number of partition without doing the hash partition won't help.
+
+#### Bucketing
+Bucketing is a technique which split a dataset into chunks which has the same key.
+Split the data by the columns you'll use for join because you'll be able to use it later. Subsequence joins will not require shuffle.
+It's also good for bucket pruning.
+
+#### Skewed Joins
+Idea:
+  Identify non-uniform data distribution and observe and fix the performance impact.
+
+Non uniform data distribution = data skew
+Can cause massive performance problems:
+ -- extremely long jobs
+ -- sometimes executor OMM
+
+Solution: 
+  - include extra information in the join key set
+  - new key to join with
+  - redistribution the data by n+1 join keys
+  - uniform tasks
+
+### Optimizing RDDs Transformations
+
+On RDDs Spark doesn't have the options to optimize the operations as it did with SQL
+
+So we need to:
+ - prefilter the data before the join
+ - pre-aggregate the data before the join
+ - co-partition: assign partitioner to RDDs so we can avoid shuffles
+ 
+CoGroup = method on RDDs, where it co-partition the 3 RDDs on same partitions
+RDDs are never shuffled again if the co-group join us reused.
+
+Broadcast Joins = usually done between a large table and a small one. The small table is copy entirely on the executors. No Shuffles involved.
