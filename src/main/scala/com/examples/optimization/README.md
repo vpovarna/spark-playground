@@ -267,3 +267,43 @@ CoGroup = method on RDDs, where it co-partition the 3 RDDs on same partitions
 RDDs are never shuffled again if the co-group join us reused.
 
 Broadcast Joins = usually done between a large table and a small one. The small table is copy entirely on the executors. No Shuffles involved.
+
+### RDD By Key Functions
+
+groupByKey is dangerous because: 
+ -> shuffles the entire data
+ -> it can OOM your executors (particularly with skewed data)
+
+Alternatives:
+  -> reduceByKey: 
+      - this will still do a shuffle because before the shuffle it's doing a partial reduce on every executor
+      - the size of the data shuffled has lower size.
+
+  -> foldByKey: 
+      - similar approach as reduceByKey
+
+  -> aggregateByKey
+      -> it takes two functions, one aggregation function between the state and each executor values and the second aggregation function is between the results computed by each executor.
+      -> it will avoid the full shuffle  
+      -> avoids the data skew problem
+      -> The aggregation functions should be REDUCTIONS and not expansions
+
+  -> combineByKey
+      -> it takes 4 functions. The difference between aggregateByKey is that you can specify the number of partition or a partitioner
+
+        wordsCount.combineByKey(
+          (count: Int) => count,
+          (currentSum: Int, newValue: Int) => currentSum + newValue,
+          (partialSum1: Int, partialSum2: Int) => partialSum1 + partialSum2,
+          numberParitions = 2
+        )
+
+### Iterator two iterator transformations
+
+ -> you can do this by using mapPartitions
+ -> The transformations are narrow
+ -> If Spark detects if the partition can fill into memory, because of skewed data, it will spill data to disk whatever it can fit in memory.
+ -> Warning: don't traverse more than once or convert to collections.
+ Map Partition it's good if you consume the iterator once, otherwise you might get OOM errors on the executors. 
+ Never use collection conversions, they will crash the executors. 
+ 

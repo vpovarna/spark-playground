@@ -3,6 +3,7 @@ package com.examples.streaming.integrations
 import com.examples.streaming.util.Schema.carsSchema
 import org.apache.spark.SparkContext
 import org.apache.spark.sql.functions._
+import org.apache.spark.sql.streaming.StreamingQuery
 import org.apache.spark.sql.{DataFrame, SparkSession}
 
 object KafkaIntegration {
@@ -16,6 +17,7 @@ object KafkaIntegration {
   sc.setLogLevel("ERROR")
 
   def readFromKafka(): Unit = {
+
     val kafkaDF: DataFrame = spark.readStream
       .format("kafka")
       .option("kafka.bootstrap.servers", "localhost:9092")
@@ -41,12 +43,13 @@ object KafkaIntegration {
     // for a DF to be kafka compatible we need key and value
     val carsKafkaDF = carsDF.selectExpr("upper(Name) as key", "Name as value")
 
-    carsKafkaDF.writeStream
+    val query: StreamingQuery = carsKafkaDF.writeStream
       .format("kafka")
       .option("kafka.bootstrap.servers", "localhost:9092")
       .option("topic", "rockthejvm")
       .option("checkpointLocation", "checkpoints") // mandatory option; used for kafka caching
       .start()
+    query
       .awaitTermination()
   }
 
